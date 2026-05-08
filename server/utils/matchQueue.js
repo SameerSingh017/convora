@@ -1,6 +1,7 @@
 const Redis = require('ioredis');
 
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+  tls: process.env.NODE_ENV === 'production' ? {} : undefined,
   retryStrategy: (times) => {
     if (times > 5) {
       console.error('[Convora] Redis connection failed after 5 retries. Is Redis running?');
