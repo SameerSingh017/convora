@@ -2,6 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 const Redis = require('ioredis');
 
 const redis = new Redis(process.env.REDIS_URL || 'redis://localhost:6379', {
+  tls: process.env.NODE_ENV === 'production' ? {} : undefined,
   retryStrategy: (times) => {
     if (times > 5) return null;
     return Math.min(times * 500, 3000);
